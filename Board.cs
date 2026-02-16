@@ -51,5 +51,26 @@ namespace Game_of_Life
                 grid[row, column] = true;
             }
         }
+
+        public int CountLiveNeighbors(int row, int column)
+        {
+            int count = 0;
+            for (int r = row - 1; r <= row + 1; r++)
+            {
+                for (int c = column - 1; c <= column + 1; c++)
+                {
+                    if (r == row && c == column) continue; // Skip the cell itself
+                    
+                    if (r >= 0 && r < rows && c >= 0 && c < columns)
+                    {
+                        if (grid[r, c]) 
+                        {
+                            count++;
+                        }
+                    }
+                }
+            }
+            return count;
+        }
     }
 }
