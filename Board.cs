@@ -60,10 +60,10 @@ namespace Game_of_Life
                 for (int c = column - 1; c <= column + 1; c++)
                 {
                     if (r == row && c == column) continue; // Skip the cell itself
-                    
+
                     if (r >= 0 && r < rows && c >= 0 && c < columns)
                     {
-                        if (grid[r, c]) 
+                        if (grid[r, c])
                         {
                             count++;
                         }
@@ -72,5 +72,43 @@ namespace Game_of_Life
             }
             return count;
         }
+
+
+        public void NextGeneration()
+        {
+            bool[,] newGrid = new bool[rows, columns];
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < columns; c++)
+                {
+                    int liveNeighbors = CountLiveNeighbors(r, c);
+                    if (grid[r, c])
+                    {
+                        // Current cell is alive
+                        newGrid[r, c] = liveNeighbors == 2 || liveNeighbors == 3;
+                    }
+                    else
+                    {
+                        // Current cell is dead
+                        newGrid[r, c] = liveNeighbors == 3;
+                    }
+                }
+            }
+            grid = newGrid;
+        }
+
+        public void RandomizeBoard(double aliveChance = 0.3)
+        {
+            Random rand = new Random();
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < columns; c++)
+                {
+                    grid[r, c] = rand.NextDouble() < aliveChance;
+                }
+            }
+        }
+
     }
+
 }
